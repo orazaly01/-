@@ -1,29 +1,25 @@
 (function(){
-    // -------- НАСТРОЙКИ --------
     const COLS = 10;
     const ROWS = 20;
-    let CELL_SIZE = 20; // будет пересчитываться
+    let CELL_SIZE = 25;
     
     const canvas = document.getElementById('boardCanvas');
     const ctx = canvas.getContext('2d');
     const nextCanvas = document.getElementById('nextCanvas');
     const nextCtx = nextCanvas.getContext('2d');
     
-    // Устанавливаем размеры для canvas
     function setCanvasSize() {
-        const container = canvas.parentElement;
-        const maxWidth = Math.min(container.clientWidth, 280);
+        const maxWidth = Math.min(window.innerWidth - 40, 300);
         CELL_SIZE = Math.floor(maxWidth / COLS);
         canvas.width = COLS * CELL_SIZE;
         canvas.height = ROWS * CELL_SIZE;
         canvas.style.width = canvas.width + 'px';
         canvas.style.height = canvas.height + 'px';
         
-        nextCanvas.width = 80;
-        nextCanvas.height = 80;
+        nextCanvas.width = 60;
+        nextCanvas.height = 60;
     }
     
-    // Фигуры
     const SHAPES = [
         { shape: [[1,1,1,1]], color: '#00e5f0' },
         { shape: [[1,1],[1,1]], color: '#f9e45b' },
@@ -45,7 +41,6 @@
     const scoreSpan = document.getElementById('score');
     const levelSpan = document.getElementById('level');
     const resetBtn = document.getElementById('resetButton');
-    const gameStatusDiv = document.getElementById('gameStatus');
     
     function randomPiece() {
         const idx = Math.floor(Math.random() * SHAPES.length);
@@ -83,14 +78,10 @@
         if (collision(currentPiece.shape, currentPiece.x, currentPiece.y)) {
             gameActive = false;
             if (gameLoop) clearInterval(gameLoop);
-            gameStatusDiv.innerText = 'КОНЕЦ';
-            gameStatusDiv.style.color = "#e74c3c";
             drawBoard();
             return false;
         }
         gameActive = true;
-        gameStatusDiv.innerText = 'ИГРА';
-        gameStatusDiv.style.color = "#2ecc71";
         drawBoard();
         return true;
     }
@@ -138,7 +129,6 @@
             score += points[Math.min(linesCleared,4)];
             const newLevel = Math.floor(score / 500) + 1;
             if (newLevel > level) level = newLevel;
-            updateScoreAndLevel();
         }
     }
     
@@ -240,14 +230,14 @@
             }
         }
         
-        nextCtx.clearRect(0, 0, 80, 80);
+        nextCtx.clearRect(0, 0, 60, 60);
         if (nextPiece) {
             const shape = nextPiece.shape;
-            const blockW = 20;
+            const blockW = 15;
             const shapeCols = shape[0].length;
             const shapeRows = shape.length;
-            const offsetX = (80 - (shapeCols * blockW)) / 2;
-            const offsetY = (80 - (shapeRows * blockW)) / 2;
+            const offsetX = (60 - (shapeCols * blockW)) / 2;
+            const offsetY = (60 - (shapeRows * blockW)) / 2;
             for (let row = 0; row < shapeRows; row++) {
                 for (let col = 0; col < shapeCols; col++) {
                     if (shape[row][col]) {
@@ -273,8 +263,6 @@
         if (gameLoop) clearInterval(gameLoop);
         gameLoop = setInterval(gameTick, 500);
         drawBoard();
-        gameStatusDiv.innerText = 'ИГРА';
-        gameStatusDiv.style.color = "#2ecc71";
     }
     
     function handleKey(e) {
