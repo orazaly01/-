@@ -2,33 +2,91 @@
     user-select: none;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
     background: linear-gradient(135deg, #0a0f1e, #0a1a2a);
-    margin: 0;
-    padding: 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Segoe UI', 'Courier New', monospace;
+    font-family: 'Courier New', monospace;
+    padding: 5px;
 }
 
 .game {
     background: #000000aa;
     backdrop-filter: blur(4px);
-    border-radius: 20px;
-    padding: 12px;
+    border-radius: 16px;
+    padding: 8px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 12px;
-    width: fit-content;
-    max-width: 100%;
-    margin: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    max-width: 320px;
+}
+
+/* Верхняя панель */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background: #07121ecc;
+    border-radius: 12px;
+    padding: 6px 10px;
+    width: 100%;
+}
+
+.score, .level {
+    background: #00000066;
+    border-radius: 20px;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #f1c40f;
+    white-space: nowrap;
+}
+
+.level {
+    color: #e67e22;
+}
+
+.next {
+    background: #00000066;
+    border-radius: 8px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+#nextCanvas {
+    background-color: #0b1c2c;
+    border-radius: 4px;
+}
+
+#resetButton {
+    background: #27ae60;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 6px 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #1e8449;
+    transition: all 0.05s ease;
+}
+
+#resetButton:active {
+    transform: translateY(2px);
+    box-shadow: none;
 }
 
 /* Игровое поле */
@@ -36,111 +94,37 @@ body {
     background-color: #0b1c2c;
     border: 2px solid #2ecc71;
     border-radius: 8px;
-    width: 240px;
-    height: 480px;
-}
-
-/* Информационная панель */
-.info {
-    background: #07121ecc;
-    backdrop-filter: blur(8px);
-    border-radius: 16px;
-    padding: 10px;
-    text-align: center;
-    min-width: 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.score-box, .level-box, .next-box {
-    background: #00000066;
-    border-radius: 12px;
-    padding: 6px;
-}
-
-.score-label, .level-label, .next-label {
-    font-size: 10px;
-    color: #aaa;
-    letter-spacing: 1px;
-}
-
-#score, #level {
-    font-size: 24px;
-    font-weight: bold;
-    color: #f1c40f;
-}
-
-#level {
-    color: #e67e22;
-}
-
-.next-label {
-    margin-bottom: 4px;
-}
-
-#nextCanvas {
-    background-color: #0b1c2c;
-    border-radius: 6px;
-    margin: 0 auto;
-}
-
-button {
-    background: #2c3e50;
-    border: none;
-    color: white;
-    font-weight: bold;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: all 0.05s ease;
-    touch-action: manipulation;
-}
-
-#resetButton {
-    padding: 8px 12px;
-    font-size: 14px;
-    margin-top: 4px;
-    background: #27ae60;
-    box-shadow: 0 2px 0 #1e8449;
-}
-
-#resetButton:active {
-    transform: translateY(2px);
-    box-shadow: 0 0px 0 #1e8449;
-}
-
-.status {
-    font-size: 12px;
-    font-weight: bold;
-    background: #00000099;
-    border-radius: 20px;
-    padding: 5px;
-    color: #2ecc71;
+    width: 100%;
+    height: auto;
 }
 
 /* Кнопки управления */
 .controls {
     width: 100%;
-    margin-top: 5px;
-    padding: 8px;
+    padding: 6px;
     background: #00000055;
-    border-radius: 50px;
+    border-radius: 40px;
 }
 
 .row {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin: 6px 0;
+    gap: 10px;
+    margin: 5px 0;
 }
 
 .ctrl {
     background: #e67e22;
-    font-size: 28px;
-    padding: 12px 20px;
-    min-width: 70px;
-    box-shadow: 0 4px 0 #b45f1b;
+    border: none;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 8px 16px;
+    min-width: 65px;
     border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #b45f1b;
+    transition: all 0.05s ease;
 }
 
 .ctrl:active {
@@ -150,74 +134,58 @@ button {
 
 #btnDrop {
     background: #e74c3c;
-    box-shadow: 0 4px 0 #c0392b;
+    box-shadow: 0 3px 0 #c0392b;
 }
 
 #btnRotate {
     background: #3498db;
-    box-shadow: 0 4px 0 #2980b9;
+    box-shadow: 0 3px 0 #2980b9;
 }
 
-/* Версия */
 .version {
-    text-align: center;
-    width: 100%;
-    font-size: 10px;
+    font-size: 9px;
     color: #666;
-    margin-top: 5px;
-    letter-spacing: 1px;
+    text-align: center;
 }
 
 /* Для очень маленьких экранов */
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     .game {
-        padding: 8px;
-        gap: 8px;
+        padding: 5px;
+        gap: 4px;
     }
     
-    #boardCanvas {
-        width: 200px;
-        height: 400px;
-    }
-    
-    .info {
-        min-width: 85px;
-        padding: 6px;
+    .top-bar {
+        padding: 4px 8px;
         gap: 5px;
     }
     
-    #score, #level {
-        font-size: 20px;
-    }
-    
-    .ctrl {
-        font-size: 22px;
-        padding: 8px 14px;
-        min-width: 55px;
-    }
-    
-    .row {
-        gap: 8px;
-    }
-    
-    .controls {
-        padding: 6px;
-    }
-}
-
-@media (max-width: 380px) {
-    #boardCanvas {
-        width: 180px;
-        height: 360px;
+    .score, .level {
+        font-size: 11px;
+        padding: 3px 6px;
     }
     
     .ctrl {
         font-size: 18px;
-        padding: 6px 10px;
-        min-width: 45px;
+        padding: 5px 10px;
+        min-width: 50px;
     }
     
-    .info {
-        min-width: 75px;
+    .row {
+        gap: 6px;
+        margin: 3px 0;
+    }
+    
+    #resetButton {
+        font-size: 14px;
+        padding: 4px 10px;
+    }
+}
+
+@media (max-width: 300px) {
+    .ctrl {
+        font-size: 16px;
+        padding: 4px 8px;
+        min-width: 45px;
     }
 }
