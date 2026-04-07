@@ -2,12 +2,26 @@
     // -------- НАСТРОЙКИ --------
     const COLS = 10;
     const ROWS = 20;
-    const CELL_SIZE = 30;
+    let CELL_SIZE = 20; // будет пересчитываться
     
     const canvas = document.getElementById('boardCanvas');
     const ctx = canvas.getContext('2d');
     const nextCanvas = document.getElementById('nextCanvas');
     const nextCtx = nextCanvas.getContext('2d');
+    
+    // Устанавливаем размеры для canvas
+    function setCanvasSize() {
+        const container = canvas.parentElement;
+        const maxWidth = Math.min(container.clientWidth, 280);
+        CELL_SIZE = Math.floor(maxWidth / COLS);
+        canvas.width = COLS * CELL_SIZE;
+        canvas.height = ROWS * CELL_SIZE;
+        canvas.style.width = canvas.width + 'px';
+        canvas.style.height = canvas.height + 'px';
+        
+        nextCanvas.width = 80;
+        nextCanvas.height = 80;
+    }
     
     // Фигуры
     const SHAPES = [
@@ -28,13 +42,11 @@
     let gameLoop = null;
     let gameActive = true;
     
-    // DOM элементы
     const scoreSpan = document.getElementById('score');
     const levelSpan = document.getElementById('level');
     const resetBtn = document.getElementById('resetButton');
     const gameStatusDiv = document.getElementById('gameStatus');
     
-    // ---- ФУНКЦИИ ----
     function randomPiece() {
         const idx = Math.floor(Math.random() * SHAPES.length);
         const original = SHAPES[idx];
@@ -71,13 +83,13 @@
         if (collision(currentPiece.shape, currentPiece.x, currentPiece.y)) {
             gameActive = false;
             if (gameLoop) clearInterval(gameLoop);
-            gameStatusDiv.innerText = '💀 ИГРА ОКОНЧЕНА 💀';
+            gameStatusDiv.innerText = 'КОНЕЦ';
             gameStatusDiv.style.color = "#e74c3c";
             drawBoard();
             return false;
         }
         gameActive = true;
-        gameStatusDiv.innerText = '🎮 В ИГРЕ';
+        gameStatusDiv.innerText = 'ИГРА';
         gameStatusDiv.style.color = "#2ecc71";
         drawBoard();
         return true;
@@ -193,10 +205,7 @@
     }
     
     function drawBoard() {
-        canvas.width = 300;
-        canvas.height = 600;
-        nextCanvas.width = 120;
-        nextCanvas.height = 120;
+        setCanvasSize();
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let row = 0; row < ROWS; row++) {
@@ -231,14 +240,14 @@
             }
         }
         
-        nextCtx.clearRect(0, 0, 120, 120);
+        nextCtx.clearRect(0, 0, 80, 80);
         if (nextPiece) {
             const shape = nextPiece.shape;
-            const blockW = 30;
+            const blockW = 20;
             const shapeCols = shape[0].length;
             const shapeRows = shape.length;
-            const offsetX = (120 - (shapeCols * blockW)) / 2;
-            const offsetY = (120 - (shapeRows * blockW)) / 2;
+            const offsetX = (80 - (shapeCols * blockW)) / 2;
+            const offsetY = (80 - (shapeRows * blockW)) / 2;
             for (let row = 0; row < shapeRows; row++) {
                 for (let col = 0; col < shapeCols; col++) {
                     if (shape[row][col]) {
@@ -264,7 +273,7 @@
         if (gameLoop) clearInterval(gameLoop);
         gameLoop = setInterval(gameTick, 500);
         drawBoard();
-        gameStatusDiv.innerText = '🎮 В ИГРЕ';
+        gameStatusDiv.innerText = 'ИГРА';
         gameStatusDiv.style.color = "#2ecc71";
     }
     
@@ -282,28 +291,23 @@
         }
     }
     
-    // Привязка телефонных кнопок
     function bindTouchButtons() {
-        const btnLeft = document.getElementById('btnLeft');
-        const btnRight = document.getElementById('btnRight');
-        const btnDown = document.getElementById('btnDown');
-        const btnRotate = document.getElementById('btnRotate');
-        const btnDrop = document.getElementById('btnDrop');
-        
-        if (btnLeft) btnLeft.addEventListener('click', (e) => { e.preventDefault(); movePiece(-1, 0); });
-        if (btnRight) btnRight.addEventListener('click', (e) => { e.preventDefault(); movePiece(1, 0); });
-        if (btnDown) btnDown.addEventListener('click', (e) => { e.preventDefault(); movePiece(0, 1); });
-        if (btnRotate) btnRotate.addEventListener('click', (e) => { e.preventDefault(); rotatePiece(); });
-        if (btnDrop) btnDrop.addEventListener('click', (e) => { e.preventDefault(); hardDrop(); });
+        document.getElementById('btnLeft')?.addEventListener('click', (e) => { e.preventDefault(); movePiece(-1, 0); });
+        document.getElementById('btnRight')?.addEventListener('click', (e) => { e.preventDefault(); movePiece(1, 0); });
+        document.getElementById('btnDown')?.addEventListener('click', (e) => { e.preventDefault(); movePiece(0, 1); });
+        document.getElementById('btnRotate')?.addEventListener('click', (e) => { e.preventDefault(); rotatePiece(); });
+        document.getElementById('btnDrop')?.addEventListener('click', (e) => { e.preventDefault(); hardDrop(); });
     }
     
+    window.addEventListener('resize', () => drawBoard());
+    
     function init() {
+        setCanvasSize();
         resetGame();
         window.addEventListener('keydown', handleKey);
         resetBtn.addEventListener('click', () => resetGame());
         bindTouchButtons();
         
-        // Для телефона: предотвращаем масштабирование при двойном тапе
         document.querySelectorAll('button').forEach(btn => {
             btn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
