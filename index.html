@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Тетрис — мобильная версия</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="tetris-panel">
+            <canvas id="boardCanvas" width="300" height="600"></canvas>
+            
+            <div class="info-panel">
+                <h3>ТЕТРИС</h3>
+                <div class="score-box">
+                    <p>🎯 ОЧКИ</p>
+                    <div id="score">0</div>
+                    <p>⚡ УРОВЕНЬ</p>
+                    <div id="level">1</div>
+                </div>
+                <div>🔮 СЛЕДУЮЩАЯ</div>
+                <canvas id="nextCanvas" width="120" height="120"></canvas>
+                <button id="resetButton">🔄 НОВАЯ ИГРА</button>
+                <div class="status" id="gameStatus">▶ ИГРА АКТИВНА</div>
+            </div>
+        </div>
+        
+        <!-- ТЕЛЕФОННЫЕ КНОПКИ (большие, удобные) -->
+        <div class="touch-controls">
+            <div class="controls-row">
+                <button class="ctrl-btn" id="btnLeft">◀</button>
+                <button class="ctrl-btn" id="btnRight">▶</button>
+            </div>
+            <div class="controls-row">
+                <button class="ctrl-btn" id="btnDown">▼</button>
+                <button class="ctrl-btn" id="btnRotate">🔄</button>
+                <button class="ctrl-btn" id="btnDrop">💥</button>
+            </div>
+        </div>
+        
+        <div class="controls-hint">
+            <span>🎮 Нажми на кнопки пальцем</span>
+        </div>
+        
+        <!-- ВЕРСИЯ 1.0 СНИЗУ -->
+        <div class="version">
+            Версия 1.0
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
