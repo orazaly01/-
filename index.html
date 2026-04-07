@@ -3,50 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Тетрис — мобильная версия</title>
+    <title>Тетрис — компактная версия</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <div class="tetris-panel">
-            <canvas id="boardCanvas" width="300" height="600"></canvas>
-            
-            <div class="info-panel">
-                <h3>ТЕТРИС</h3>
-                <div class="score-box">
-                    <p>🎯 ОЧКИ</p>
-                    <div id="score">0</div>
-                    <p>⚡ УРОВЕНЬ</p>
-                    <div id="level">1</div>
-                </div>
-                <div>🔮 СЛЕДУЮЩАЯ</div>
-                <canvas id="nextCanvas" width="120" height="120"></canvas>
-                <button id="resetButton">🔄 НОВАЯ ИГРА</button>
-                <div class="status" id="gameStatus">▶ ИГРА АКТИВНА</div>
+    <div class="game">
+        <!-- Игровое поле -->
+        <canvas id="boardCanvas" width="300" height="600"></canvas>
+        
+        <!-- Информация справа -->
+        <div class="info">
+            <div class="score-box">
+                <div class="score-label">ОЧКИ</div>
+                <div id="score">0</div>
+            </div>
+            <div class="level-box">
+                <div class="level-label">УРОВЕНЬ</div>
+                <div id="level">1</div>
+            </div>
+            <div class="next-box">
+                <div class="next-label">СЛЕД.</div>
+                <canvas id="nextCanvas" width="80" height="80"></canvas>
+            </div>
+            <button id="resetButton">НОВАЯ</button>
+            <div class="status" id="gameStatus">ИГРА</div>
+        </div>
+        
+        <!-- Кнопки управления -->
+        <div class="controls">
+            <div class="row">
+                <button class="ctrl" id="btnLeft">◀</button>
+                <button class="ctrl" id="btnRight">▶</button>
+            </div>
+            <div class="row">
+                <button class="ctrl" id="btnDown">▼</button>
+                <button class="ctrl" id="btnRotate">🔄</button>
+                <button class="ctrl" id="btnDrop">💥</button>
             </div>
         </div>
         
-        <!-- ТЕЛЕФОННЫЕ КНОПКИ (большие, удобные) -->
-        <div class="touch-controls">
-            <div class="controls-row">
-                <button class="ctrl-btn" id="btnLeft">◀</button>
-                <button class="ctrl-btn" id="btnRight">▶</button>
-            </div>
-            <div class="controls-row">
-                <button class="ctrl-btn" id="btnDown">▼</button>
-                <button class="ctrl-btn" id="btnRotate">🔄</button>
-                <button class="ctrl-btn" id="btnDrop">💥</button>
-            </div>
-        </div>
-        
-        <div class="controls-hint">
-            <span>🎮 Нажми на кнопки пальцем</span>
-        </div>
-        
-        <!-- ВЕРСИЯ 1.0 СНИЗУ -->
-        <div class="version">
-            Версия 1.0
-        </div>
+        <!-- Версия -->
+        <div class="version">v1.0</div>
     </div>
 
     <script src="script.js"></script>
