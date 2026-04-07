@@ -3,31 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Тетрис — компактная версия</title>
+    <title>Тетрис</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="game">
-        <!-- Игровое поле -->
-        <canvas id="boardCanvas" width="300" height="600"></canvas>
-        
-        <!-- Информация справа -->
-        <div class="info">
-            <div class="score-box">
-                <div class="score-label">ОЧКИ</div>
-                <div id="score">0</div>
-            </div>
-            <div class="level-box">
-                <div class="level-label">УРОВЕНЬ</div>
-                <div id="level">1</div>
-            </div>
-            <div class="next-box">
-                <div class="next-label">СЛЕД.</div>
-                <canvas id="nextCanvas" width="80" height="80"></canvas>
-            </div>
-            <button id="resetButton">НОВАЯ</button>
-            <div class="status" id="gameStatus">ИГРА</div>
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="score">🎯 <span id="score">0</span></div>
+            <div class="level">⚡ <span id="level">1</span></div>
+            <div class="next">🔮 <canvas id="nextCanvas" width="60" height="60"></canvas></div>
+            <button id="resetButton">🔄</button>
         </div>
+        
+        <!-- Игровое поле -->
+        <canvas id="boardCanvas" width="250" height="500"></canvas>
         
         <!-- Кнопки управления -->
         <div class="controls">
@@ -42,7 +32,6 @@
             </div>
         </div>
         
-        <!-- Версия -->
         <div class="version">v1.0</div>
     </div>
 
